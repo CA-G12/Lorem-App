@@ -232,3 +232,10 @@
       transform: translateX(0px);
     }
   } 
+
+  :valid{
+    color: green;
+  }
+  :invalid{
+    color: red;
+  }
