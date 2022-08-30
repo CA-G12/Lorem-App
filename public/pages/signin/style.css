@@ -232,3 +232,9 @@ a.ssolink {
     transform: translateX(0px);
   }
 } 
+input:valid{
+    color: green;
+}
+input:invalid{
+    color: red;
+}
