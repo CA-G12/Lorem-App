@@ -1,7 +1,7 @@
 const signInForm = document.querySelector('#stripe-login');
 const submit = document.querySelector('#submit');
 
-signInForm.addEventListener('submit', (e) => {
+signInForm.addEventListener('click', (e) => {
   e.preventDefault();
   const email = signInForm.email.value;
   const password = signInForm.password.value;

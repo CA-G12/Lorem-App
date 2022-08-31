@@ -37,6 +37,7 @@ const signIn = (req, res) => {
     }).then((users) => {
       const { username, id } = users.rows[0];
       generateToken(res, { username, id });
+
     })
     .catch((err) => res.status(401).json({ ERROR: 'Internal server error' }));
 };

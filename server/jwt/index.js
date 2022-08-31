@@ -12,7 +12,6 @@ const generateToken = (res, payload) => {
     }
   });
 };
-
 const verifyToken = (req, res, next) => {
   const recivedToken = req.cookies.token;
   if (!recivedToken) res.status(400).send('Access Denied');
@@ -28,3 +27,4 @@ const verifyToken = (req, res, next) => {
 };
 
 module.exports = { generateToken, verifyToken };
+
