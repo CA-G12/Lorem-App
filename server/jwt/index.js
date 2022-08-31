@@ -12,7 +12,19 @@ const generateToken = (res, payload) => {
     }
   });
 };
-// const verifyToken = () => {
+const verifyToken = (req, res, next) => {
+  const recivedToken = req.cookies.token;
+  if (!recivedToken) res.status(400).send('Access Denied');
+  jwt.verify(recivedToken, process.env.SECRET_TOKEN, (err, decoded) => {
+    if (err) {
+      res.status(400).send('Token invalid');
+    } else {
+      res.cookie('username', decoded.username);
+      res.cookie('userId:', decoded.id);
+      next();
+    }
+  });
+};
 
-// };
-module.exports = { generateToken };
+module.exports = { generateToken, verifyToken };
+
