@@ -7,7 +7,6 @@ const insertDataQuery = ({ password, username, email }) => {
     values: [username, email, password],
 
   };
-  console.log(password, username, email);
   return connection.query(sql);
 };
 

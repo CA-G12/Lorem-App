@@ -33,7 +33,6 @@ const signIn = (req, res) => {
       if (!pass) return res.status(401).json({ ERROR: 'Password is not valid!' });
       console.log('screw eslent');
       // create token
-      // res.json("test")
       res.redirect('/lorem')
     })
     .catch((err) => console.log(err));
