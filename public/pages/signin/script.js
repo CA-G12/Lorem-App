@@ -1,7 +1,6 @@
 const signInForm = document.querySelector('#stripe-login');
-const submit = document.querySelector('#submit');
 
-signInForm.addEventListener('click', (e) => {
+signInForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const email = signInForm.email.value;
   const password = signInForm.password.value;
@@ -14,7 +13,7 @@ signInForm.addEventListener('click', (e) => {
   fetch('/sign-in', options)
     .then((res) => {
       console.log(res.json());
-      window.location = '../../lorem1';
-    }).then((data) => console.log(data))
+      window.location = '../lorem/index.html';
+    })
     .catch((err) => console.log(err));
 });
