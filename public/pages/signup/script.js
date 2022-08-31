@@ -4,6 +4,7 @@ const emailInput = document.getElementById('email');
 const passwordInput = document.getElementById('password');
 const confirmPasswordInput = document.getElementById('confirm-password');
 
+
 const validateForm = (username, email, password, confirmPassword) => {
   if ((username.trim() === '' || email.trim() === '' || password.trim() === '' || confirmPassword.trim() === '')) {
     alert('Spaces are not allowed');
@@ -43,6 +44,9 @@ signUpBtn.addEventListener('click', (e) => {
     }),
   };
   fetch('/signUp', options)
-    .then((data) => window.location = './../../index.html')
+    .then(() => {
+      localStorage.setItem('username', username);
+      window.location = './../lorem/index.html';
+    })
     .catch((err) => console.log(err));
 });
