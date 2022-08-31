@@ -5,7 +5,7 @@ const { signInQuery } = require('../database/queries');
 
 const signInSchema = joi.object({
   email: joi.string().email().required(),
-  password: joi.string().min(6).required(),
+  password: joi.string().min(4).required(),
 });
 
 const signIn = (req, res) => {
@@ -38,7 +38,6 @@ const signIn = (req, res) => {
       const { username, id } = user.rows[0];
       console.log('before generete:', username, id);
       generateToken(res, { username, id });
-
     })
     .catch((err) => res.status(401).json({ ERROR: 'Internal server error' }));
 };
