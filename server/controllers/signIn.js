@@ -1,5 +1,6 @@
 const joi = require('joi');
 const bcrypt = require('bcrypt');
+const { generateToken, verifyToken } = require('../jwt');
 const { signInQuery } = require('../database/queries');
 
 const signInSchema = joi.object({
@@ -25,18 +26,19 @@ const signIn = (req, res) => {
       // check email
       const existedEmail = !!users.rows[0];
       if (existedEmail === false) return res.status(401).json({ ERROR: 'Email is not valid!' });
-
       // check password
       return bcrypt.compare(password, users.rows[0].password);
     })
-    .then((pass) => {
-      if (!pass) return res.status(401).json({ ERROR: 'Password is not valid!' });
-      console.log('screw eslent');
+    .then((validPassword) => {
+      if (!validPassword) return res.status(401).json({ ERROR: 'Password is not valid!' });
+
       // create token
-      // res.json("test")
-      res.redirect('/lorem')
+      return signInQuery(email, password);
+    }).then((users) => {
+      const { username, id } = users.rows[0];
+      generateToken(res, { username, id });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => res.status(401).json({ ERROR: 'Internal server error' }));
 };
 
 module.exports = signIn;
