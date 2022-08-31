@@ -43,6 +43,6 @@ signUpBtn.addEventListener('click', (e) => {
     }),
   };
   fetch('/signUp', options)
-    .then((data) => data.json())
-    .then((res) => console.log(res));
+    .then((data) => window.location = './../../index.html')
+    .catch((err) => console.log(err));
 });

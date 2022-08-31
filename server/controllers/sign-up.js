@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const joi = require('joi');
 const { insertDataQuery } = require('../database/queries');
 
-const hashPassword = (password) => bcrypt.hashSync(password, 10);
+const hashPassword = (password) => bcrypt.hash(password, 10);
 
 const signUp = (req, res) => {
   const schema = joi.object({
@@ -12,11 +12,13 @@ const signUp = (req, res) => {
   });
 
   schema.validateAsync(req.body)
-    .then((data) => insertDataQuery({
-      password: hashPassword(data.password),
-      username: data.username,
-      email: data.email,
-    }))
+    .then((data) => hashPassword(data.password))
+    .then((hashedPassword) => (insertDataQuery({
+      password: hashedPassword,
+      username: req.body.username,
+      email: req.body.email,
+    })))
+
     .catch((err) => res.send(err));
 };
 
