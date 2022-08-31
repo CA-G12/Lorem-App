@@ -6,7 +6,7 @@ const clientError = require('../controllers');
 const generateToken = (res, payload) => {
   jwt.sign(payload, process.env.SECRET_TOKEN, { algorithm: 'HS256' }, (err, token) => {
     if (err) {
-      router.use(clientError);
+      res.status(401).send('Error');
     } else {
       res.cookie('token', token).send('Token saved');
     }

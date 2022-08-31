@@ -48,5 +48,5 @@ signUpBtn.addEventListener('click', (e) => {
       localStorage.setItem('username', username);
       window.location = './../lorem/index.html';
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log('err'));
 });
