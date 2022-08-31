@@ -3,7 +3,7 @@ const addLoremBtn = document.querySelector('.add-lorem-btn');
 const addLoremInput = document.querySelector('.add-lorem-input');
 const cards = document.querySelector('.cards');
 
-addingYourName.textContent = `${localStorage.getItem('username')}'s Lorem`;
+// addingYourName.textContent = `${localStorage.getItem('username')}'s Lorem`;
 
 const renderData = (arr) => {
   cards.textContent = '';
@@ -25,8 +25,9 @@ const fetchAll = () => {
   fetch('/getLorem')
     .then((data) => data.json())
     .then((result) => {
-      if (result.length !== 0) {
-        renderData(result);
+      addingYourName.textContent = `${result[1]}'s Lorem`;
+      if (result[0].length !== 0) {
+        renderData(result[0]);
       }
     })
     .catch((err) => console.log(err));
@@ -36,6 +37,10 @@ fetchAll();
 addLoremBtn.addEventListener('click', (e) => {
   e.preventDefault();
   const loremData = addLoremInput.value;
+  if (loremData.trim() === '') {
+    alert('Empty text is not allowed');
+    return;
+  }
   const options = {
     method: 'POST',
     headers: {

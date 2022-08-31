@@ -6,7 +6,7 @@ const getLorem = (req, res) => {
     if (err) {
       res.status(400).send('Token invalid');
     } else {
-      getLoremQuery(decoded.id).then((userData) => res.send(userData.rows))
+      getLoremQuery(decoded.id).then((userData) => res.send([userData.rows, decoded.username]));
     }
   });
 };
