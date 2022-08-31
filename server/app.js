@@ -12,6 +12,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(compression());
 
 app.use(express.static(join(__dirname, '..', 'public')));
+app.get('/lorem', (req, res) => {
+    res.sendFile(join(__dirname, '..', 'public', 'pages', 'lorem', 'index.html'));
+});
+// app.get('/signin', (req, res) => {
+//       res.sendFile(join(__dirname, '..', 'public', 'pages', 'signin', 'index.html'));
+// });
 app.use(router);
-
 module.exports = app;
