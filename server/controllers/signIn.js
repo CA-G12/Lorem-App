@@ -21,11 +21,11 @@ const signIn = (req, res) => {
 
   // check user info on database
   const { email, password } = req.body;
-  signInQuery(email, password)
+  signInQuery(email)
     .then((users) => {
       // check email
-      const existedEmail = !!users.rows[0];
-      if (existedEmail === false) return res.status(401).json({ ERROR: 'Email is not valid!' });
+      if (users.rows.length === 0) return res.status(401).json({ ERROR: 'Email is not valid!' });
+
       // check password
       return bcrypt.compare(password, users.rows[0].password);
     })
@@ -33,9 +33,10 @@ const signIn = (req, res) => {
       if (!validPassword) return res.status(401).json({ ERROR: 'Password is not valid!' });
 
       // create token
-      return signInQuery(email, password);
-    }).then((users) => {
-      const { username, id } = users.rows[0];
+      return signInQuery(email);
+    }).then((user) => {
+      const { username, id } = user.rows[0];
+      console.log('before generete:', username, id);
       generateToken(res, { username, id });
 
     })
