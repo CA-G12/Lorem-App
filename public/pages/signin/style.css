@@ -232,9 +232,10 @@ a.ssolink {
     transform: translateX(0px);
   }
 } 
-input:valid{
-    color: green;
+
+:valid{
+  color: green;
 }
-input:invalid{
-    color: red;
+:invalid{
+  color: red;
 }
