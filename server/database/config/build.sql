@@ -7,7 +7,7 @@ CREATE TABLE users(
     password varchar(255) not null
 );
 CREATE TABLE lorem(
-    id serial primary key on DELETE CASCADE,
+    id serial primary key,
     content text not null,
     userId integer not null,
     foreign key (userId) references users (id) on DELETE CASCADE
