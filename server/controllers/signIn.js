@@ -13,9 +13,9 @@ const signIn = (req, res) => {
   const { error } = signInSchema.validate(req.body, { abortEarly: false });
   if (error) {
     if (error.details.length > 1) {
-      res.status(400).json(`1:${error.details[0].message} 2:${error.details[1].message}`);
+      return res.status(400).json(`1:${error.details[0].message}, 2:${error.details[1].message}`);
     } else {
-      res.status(400).json(error.details[0].message);
+      return res.status(400).json(error.details[0].message);
     }
   }
 
@@ -24,19 +24,18 @@ const signIn = (req, res) => {
   signInQuery(email)
     .then((users) => {
       // check email
-      if (users.rows.length === 0) return res.status(401).json({ ERROR: 'Email is not valid!' });
+      if (users.rows.length === 0) return res.status(401).json({ ERROR: 'Email is not found!' });
 
       // check password
       return bcrypt.compare(password, users.rows[0].password);
     })
     .then((validPassword) => {
-      if (!validPassword) return res.status(401).json({ ERROR: 'Password is not valid!' });
+      if (!validPassword) return res.status(401).json({ ERROR: 'Incorrect Password!' });
 
       // create token
       return signInQuery(email);
     }).then((user) => {
       const { username, id } = user.rows[0];
-      console.log('before generete:', username, id);
       generateToken(res, { username, id });
     })
     .catch((err) => res.status(401).json({ ERROR: 'Internal server error' }));
