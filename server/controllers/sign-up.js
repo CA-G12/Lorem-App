@@ -21,9 +21,9 @@ const signUp = (req, res) => {
     }))
     .then((result) => signInQuery(req.body.email, req.body.password))
     .then((userData) => {
-      generateToken(res, { username: req.body.username,id: userData.rows[0].id });
+      generateToken(res, { username: req.body.username, id: userData.rows[0].id });
     })
-    .catch((err) => res.send(err));
+    .catch((err) => new Error(err));
 };
 
 module.exports = signUp;
